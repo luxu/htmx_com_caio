@@ -1,4 +1,4 @@
-# Projeto HTMX
+# Projeto Músicas e artistas
 
 Para popular o banco com as músicas e artistas
 
@@ -18,4 +18,3 @@ aparecendo a msg abaixo:
 ````
 2229 músicas de 475 artistas foram importadas.
 ````
-deu tudo certo!!!
