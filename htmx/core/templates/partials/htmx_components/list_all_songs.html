@@ -1,0 +1,39 @@
+{% if songs %}
+    <div class="row">
+        <div class="jumbotron">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Ano</th>
+                    <th>Cantor</th>
+                    <th colspan="2">Opções</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for song in songs %}
+                    <tr>
+                        <td>{{ song.id }}</td>
+                        <td>{{ song.name }}</td>
+                        <td>{{ song.release_year }}</td>
+                        <td>{{ song.artist.name }}</td>
+                        <td>
+                            <div class="text-center">
+                                <p style="float: right; cursor: pointer; margin-left: 10px" class="badge bg-primary">E</p>
+                                <p style="float: right; cursor: pointer" class="badge bg-danger"
+                                   hx-delete="{% url 'delete_song' song.id %}"
+                                   hx-trigger="click"
+                                   hx-target="#list-song"                                   
+                                >X</p>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% else %}
+	<h4>Nenhuma música cadastrada</h4>
+{% endif %}

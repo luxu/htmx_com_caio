@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <h3>Músicas</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <form>
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label for="">Nome da música</label>
+                        <input type="text" class="form-control" name="nome"
+                               hx-get="{% url 'check_song' %}"
+                               hx-trigger="keyup"
+                               hx-target="#song-out"
+                        >
+                        <div id="song-out"></div>
+                        <label for="">Ano da música</label>
+                        <input type="number" class="form-control" name="ano">
+                        <br>
+                        <label for="">Cantor</label>
+                        <select name="cantor">
+                            {% for artist in artists %}
+                                <option value="{{ artist.id }}">{{ artist }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <button class="btn btn-success"
+                               hx-post="{% url 'save_song' %}"
+                               hx-trigger="click"
+                               hx-target="#list-song"
+                        >Salvar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="list-song">
+        {% include 'partials/htmx_components/list_all_songs.html' %}
+    </div>
+{% endblock content %}

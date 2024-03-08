@@ -1,0 +1,9 @@
+{% block content %}
+    <div class="jumbotron">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="{% url 'list_songs' %}">Músicas</a></li>
+            <li><a href="{% url 'list_artists' %}">Artistas</a></li>
+        </ul>
+    </div>
+{% endblock content %}

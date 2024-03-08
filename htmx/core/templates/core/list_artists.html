@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <h3>Cantor</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <form>
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label for="">Nome do cantor</label>
+                        <input type="text" class="form-control" name="nome"
+                               hx-get="{% url 'check_artist' %}"
+                               hx-trigger="keyup"
+                               hx-target="#artist-out"
+                        >
+                        <div id="artist-out"></div>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <button class="btn btn-success"
+                               hx-post="{% url 'save_artist' %}"
+                               hx-trigger="click"
+                               hx-target="#list-artist"
+                        >Salvar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="list-artist">
+        {% include 'partials/htmx_components/list_all_artists.html' %}
+    </div>
+{% endblock content %}
