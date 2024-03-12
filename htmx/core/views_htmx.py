@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
+from django.core.paginator import Paginator
 
 from htmx.core.models import Song, Artist
 
@@ -37,14 +38,21 @@ def save_song(request):
 @csrf_exempt
 @require_http_methods(['DELETE'])
 def delete_song(request, id):
-    template_name = 'partials/htmx_components/list_all_songs.html'
+    template_name = 'partials/htmx_components/htmx_table_songs.html'
     song = Song.objects.get(id=id)
     song.delete()
-    songs = Song.objects.all().order_by('-pk')[:5]
-    artists = Artist.objects.all().order_by('-pk')[:10]
+
+    queryset = Song.objects.all().order_by('-pk')
+    page_number = request.GET.get('page', 1)
+    page_size = request.GET.get('size', 5)
+    paginator = Paginator(queryset, page_size)
+
     context = {
-        'songs': songs,
-        'artists': artists
+        'page_obj': paginator.get_page(page_number),
+        'page_range': paginator.get_elided_page_range(
+            page_number
+        ),
+        'artists': Artist.objects.all().order_by('-pk')[:15]
     }
     return render(request, template_name, context)
 
